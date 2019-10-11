@@ -10,4 +10,14 @@ describe Mission, type: :model do
     it { should have_many :astronaut_missions}
     it { should have_many(:astronauts).through(:astronaut_missions)}
   end
+
+  describe 'self.order_alpha' do
+    it 'can order missions alphabetically by title' do
+      capricorn = Mission.create(title: 'Capricorn 4', time_in_space: 68)
+      gemini = Mission.create(title: 'Gemini 7', time_in_space: 96)
+      apollo = Mission.create(title: 'Apollo 14', time_in_space: 144)
+
+      expect(Mission.order_alpha).to eq([apollo, capricorn, gemini])
+    end
+  end
 end
