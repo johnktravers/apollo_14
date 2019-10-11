@@ -2,8 +2,11 @@
 
 <% @astronauts.each do |astronaut| %>
   <section id="astronaut-<%= astronaut.id %>">
-    <h4><%= astronaut.name %></h4>
+    <h3><%= astronaut.name %></h3>
     <p>Age: <%= astronaut.age %></p>
     <p>Job: <%= astronaut.job %></p>
   </section>
 <% end %>
+
+<br>
+<h4>Average Age: <%= @astronauts.average_age %></h4>
