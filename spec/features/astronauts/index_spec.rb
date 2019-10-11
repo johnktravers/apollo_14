@@ -5,7 +5,7 @@ RSpec.describe 'astronaut index page', type: :feature do
   before :each do
     @neil = Astronaut.create(name: 'Neil Armstrong', age: 37, job: 'Commander')
     @gail = Astronaut.create(name: 'Gail Hopper', age: 42, job: 'Lead Scientist')
-    @nathan = Astronaut.create(name: 'Nathan Baxter', age: 33, job: 'Psychologist')
+    @nathan = Astronaut.create(name: 'Nathan Baxter', age: 35, job: 'Psychologist')
 
     @apollo = Mission.create(title: 'Apollo 14', time_in_space: 144)
     @capricorn = Mission.create(title: 'Capricorn 4', time_in_space: 68)
@@ -35,9 +35,15 @@ RSpec.describe 'astronaut index page', type: :feature do
 
     within "#astronaut-#{@nathan.id}" do
       expect(page).to have_content('Nathan Baxter')
-      expect(page).to have_content('Age: 33')
+      expect(page).to have_content('Age: 35')
       expect(page).to have_content('Job: Psychologist')
     end
+  end
+
+  it 'can see the average age of all astronauts' do
+    visit '/astronauts'
+
+    expect(page).to have_content('Average Age: 38')
   end
 
 end
