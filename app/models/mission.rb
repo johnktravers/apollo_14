@@ -3,4 +3,8 @@ class Mission < ApplicationRecord
 
   has_many :astronaut_missions
   has_many :astronauts, through: :astronaut_missions
+
+  def self.order_alpha
+    order(:title)
+  end
 end
