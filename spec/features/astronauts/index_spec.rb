@@ -11,10 +11,10 @@ RSpec.describe 'astronaut index page', type: :feature do
     @capricorn = Mission.create(title: 'Capricorn 4', time_in_space: 68)
     @gemini = Mission.create(title: 'Gemini 7', time_in_space: 96)
 
-    AstronautMission.create(astronaut_id: @neil.id, mission_id: @apollo.id)
     AstronautMission.create(astronaut_id: @neil.id, mission_id: @gemini.id)
-    AstronautMission.create(astronaut_id: @gail.id, mission_id: @capricorn.id)
+    AstronautMission.create(astronaut_id: @neil.id, mission_id: @apollo.id)
     AstronautMission.create(astronaut_id: @gail.id, mission_id: @gemini.id)
+    AstronautMission.create(astronaut_id: @gail.id, mission_id: @capricorn.id)
     AstronautMission.create(astronaut_id: @nathan.id, mission_id: @apollo.id)
   end
 
@@ -44,6 +44,28 @@ RSpec.describe 'astronaut index page', type: :feature do
     visit '/astronauts'
 
     expect(page).to have_content('Average Age: 38')
+  end
+
+  it 'can see a list of astronauts space missions in alphabetical order' do
+    visit '/astronauts'
+
+    within "#astronaut-#{@neil.id}" do
+      expect(page.find_all('.mission')[0]).to have_content('Apollo 14')
+      expect(page.find_all('.mission')[1]).to have_content('Gemini 7')
+      expect(page).to_not have_content('Capricorn 4')
+    end
+
+    within "#astronaut-#{@gail.id}" do
+      expect(page.find_all('.mission')[0]).to have_content('Capricorn 4')
+      expect(page.find_all('.mission')[1]).to have_content('Gemini 7')
+      expect(page).to_not have_content('Apollo 14')
+    end
+
+    within "#astronaut-#{@nathan.id}" do
+      expect(page.find_all('.mission')[0]).to have_content('Apollo 14')
+      expect(page).to_not have_content('Gemini 7')
+      expect(page).to_not have_content('Capricorn 4')
+    end
   end
 
 end
