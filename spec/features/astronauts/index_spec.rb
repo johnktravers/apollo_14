@@ -68,4 +68,20 @@ RSpec.describe 'astronaut index page', type: :feature do
     end
   end
 
+  it 'can see the total time in space for each astronaut' do
+    visit '/astronauts'
+
+    within "#astronaut-#{@neil.id}" do
+      expect(page).to have_content('Total Time in Space: 240 days')
+    end
+
+    within "#astronaut-#{@gail.id}" do
+      expect(page).to have_content('Total Time in Space: 164 days')
+    end
+
+    within "#astronaut-#{@nathan.id}" do
+      expect(page).to have_content('Total Time in Space: 144 days')
+    end
+  end
+
 end
